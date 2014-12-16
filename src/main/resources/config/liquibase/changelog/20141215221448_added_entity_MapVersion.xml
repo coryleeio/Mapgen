@@ -19,6 +19,8 @@
             <column name="max_x" type="decimal(10,2)"/>
             <column name="version" type="integer"/>
         </createTable>
-        
+        <sql>
+        	insert into T_MAPVERSION(max_y, max_x, version) VALUES (200,200,1);
+        </sql>
     </changeSet>
 </databaseChangeLog>
