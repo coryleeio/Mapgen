@@ -4,6 +4,7 @@ mapgenApp.controller('MapController', function ($scope, resolvedMap, Map, resolv
 
         $scope.maps = resolvedMap;
         $scope.mapVersions = resolvedMapVersion;
+        $scope.users = resolvedUser;
 
         $scope.create = function () {
             Map.save($scope.map,

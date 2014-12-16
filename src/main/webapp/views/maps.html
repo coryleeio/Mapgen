@@ -31,12 +31,6 @@
                             <select class="form-control" ng-model="map.mapVersion.id" ng-options="mapVersion.id as mapVersion.id for mapVersion in mapVersions">
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>user</label>
-                            <select class="form-control" ng-model="map.user.id" ng-options="user.id as user.id for user in users">
-                            </select>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
@@ -57,7 +51,6 @@
                 <tr>
                     <th>ID</th>
                     <th>mapVersion</th>
-                    <th>user</th>
                     <th></th>
                 </tr>
             </thead>
@@ -65,7 +58,6 @@
                 <tr ng-repeat="map in maps">
                     <td>{{map.id}}</td>
                     <td>{{map.mapVersion.id}}</td>
-                    <td>{{map.user.id}}</td>
                     <td>
                         <button type="submit"
                                 ng-click="update(map.id)"

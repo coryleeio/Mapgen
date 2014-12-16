@@ -16,7 +16,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="mapversion_id" type="bigint"/>
-            <column name="user_id" type="bigint"/>
+            <column name="user_login" type="varchar"/>
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="mapversion_id"
@@ -24,10 +24,10 @@
                                  constraintName="fk_map_mapversion_id"
                                  referencedColumnNames="id"
                                  referencedTableName="T_MAPVERSION"/>
-        <addForeignKeyConstraint baseColumnNames="user_id"
+        <addForeignKeyConstraint baseColumnNames="user_login"
                                  baseTableName="T_MAP"
                                  constraintName="fk_map_user_id"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="login"
                                  referencedTableName="T_USER"/>
     </changeSet>
 </databaseChangeLog>
