@@ -1,18 +1,29 @@
 package io.corylee.mapgen.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import io.corylee.mapgen.domain.Map;
+import io.corylee.mapgen.repository.CornerRepository;
 import io.corylee.mapgen.repository.MapRepository;
+import io.corylee.mapgen.repository.MapVersionRepository;
+import io.corylee.mapgen.repository.PolygonRepository;
+import io.corylee.mapgen.web.rest.dto.MapDTO;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Map.
@@ -25,6 +36,18 @@ public class MapResource {
 
     @Inject
     private MapRepository mapRepository;
+    
+    @Inject
+    private MapVersionRepository mapVersionRepository;
+    
+    @Inject
+    private PolygonRepository nodeRepository;
+    
+    @Inject
+    private CornerRepository cornerRepository;
+    
+    @Inject
+    private CornerRepository edgeRepository;
 
     /**
      * POST  /rest/maps -> Create a new map.
@@ -57,11 +80,13 @@ public class MapResource {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Map> get(@PathVariable Long id) {
+    public ResponseEntity<MapDTO> get(@PathVariable Long id) {
         log.debug("REST request to get Map : {}", id);
-        return Optional.ofNullable(mapRepository.findOne(id))
-            .map(map -> new ResponseEntity<>(
-                map,
+        Map map = mapRepository.findOne(id);
+        final MapDTO dto = new MapDTO(map, map.getMapVersion(), null, null, null);
+        return Optional.ofNullable(dto)
+            .map(myDto -> new ResponseEntity<>(
+            	dto,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

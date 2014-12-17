@@ -61,6 +61,7 @@ Polygon
   Boolean        - water       - Is water.
   Boolean        - coast       - Is land with ocean boarder.
   Elevation      - elevation   - Average of related corners elevation.
+  Map            - map
 
 Edge
   Polygon        - d0          - Polygon connected by the edge
@@ -68,6 +69,7 @@ Edge
   Corner         - v0          - Corner connected by the edge
   Corner         - v0          - Corner connected by the edge
   Boolean        - river       - Is a river
+  Map            - map
 
 Corner
   Double         - x           - x bounded by map
@@ -82,6 +84,7 @@ Corner
   Corner         - downhill    - Steepest downhill adjacent corner.
   Moisture       - moisture    - Decreases as distance from fresh water increases.
   Elevation      - elevation   - 
+  Map            - map
 
  Moisture 6(wet) - 1(dry)
  Elevation 4(High) - 1 (low)

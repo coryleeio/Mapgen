@@ -22,7 +22,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class MapVersion implements Serializable {
 
-    @Id
+	private static final long serialVersionUID = 8189620119741970686L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

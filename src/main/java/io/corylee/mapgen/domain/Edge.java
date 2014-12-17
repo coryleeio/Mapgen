@@ -1,7 +1,6 @@
 package io.corylee.mapgen.domain;
 
-import java.io.Serializable;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,54 +11,53 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-/**
- * A Map.
- */
 @Entity
-@Table(name = "T_MAP")
+@Table(name = "T_CORNER")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Map implements Serializable {
-
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7054039492341493148L;
+public class Edge {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    private MapVersion mapVersion;
+	@ManyToOne
+	private Map map;
+	
 
-    @ManyToOne
-    private User user;
+    @Column(name = "river")
+    private Boolean river;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public MapVersion getMapVersion() {
-        return mapVersion;
-    }
 
-    public void setMapVersion(MapVersion mapVersion) {
-        this.mapVersion = mapVersion;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public Map getMap() {
+		return map;
+	}
 
-    @Override
+
+	public void setMap(Map map) {
+		this.map = map;
+	}
+
+
+	public Boolean getRiver() {
+		return river;
+	}
+
+
+	public void setRiver(Boolean river) {
+		this.river = river;
+	}
+    
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -68,9 +66,9 @@ public class Map implements Serializable {
             return false;
         }
 
-        Map map = (Map) o;
+        Edge edge = (Edge) o;
 
-        if (id != null ? !id.equals(map.id) : map.id != null) return false;
+        if (id != null ? !id.equals(edge.id) : edge.id != null) return false;
 
         return true;
     }
@@ -82,8 +80,9 @@ public class Map implements Serializable {
 
     @Override
     public String toString() {
-        return "Map{" +
+        return "Polygon{" +
                 "id=" + id +
+                ", river='" + river + "'" +
                 '}';
     }
 }

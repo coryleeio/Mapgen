@@ -1,0 +1,135 @@
+<div>
+
+    <h2>Polygons</h2>
+
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#savePolygonModal" ng-click="clear()">
+        <span class="glyphicon glyphicon-flash"></span> Create a new Polygon
+    </button>
+    <div class="modal fade" id="savePolygonModal" tabindex="-1" role="dialog" aria-labelledby="myPolygonLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form name="form" role="form" novalidate
+                      class="ng-scope ng-invalid ng-invalid-required ng-dirty ng-valid-minlength"
+                      ng-submit="create()">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                                ng-click="clear()">&times;</button>
+                        <h4 class="modal-title" id="myPolygonLabel">Create or edit a Polygon</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>ID</label>
+                            <input type="text" class="form-control" name="id"
+                                   ng-model="polygon.id" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>X</label>
+                            <input type="text" class="form-control"
+                                   ng-model="polygon.x">
+                        </div>
+                        <div class="form-group">
+                            <label>Y</label>
+                            <input type="text" class="form-control"
+                                   ng-model="polygon.y">
+                        </div>
+                        <div class="form-group">
+                            <label>Ocean</label>
+                            <input type="checkbox" class="form-control"
+                                   ng-model="polygon.ocean">
+                        </div>
+                        <div class="form-group">
+                            <label>Water</label>
+                            <input type="checkbox" class="form-control"
+                                   ng-model="polygon.water">
+                        </div>
+                        <div class="form-group">
+                            <label>Coast</label>
+                            <input type="checkbox" class="form-control"
+                                   ng-model="polygon.coast">
+                        </div>
+                        <div class="form-group">
+                            <label>Elevation</label>
+                            <input type="number" class="form-control"
+                                   ng-model="polygon.elevation">
+                        </div>
+
+                         <div class="form-group">
+                             <label>polygon</label>
+                             <select class="form-control" multiple ng-model="polygon.polygons" ng-options="polygon as polygon.id for polygon in polygons track by polygon.id">
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label>corner</label>
+                             <select class="form-control" multiple ng-model="polygon.corners" ng-options="corner as corner.id for corner in corners track by corner.id">
+                             </select>
+                         </div>
+                         <div class="form-group">
+                             <label>edge</label>
+                             <select class="form-control" multiple ng-model="polygon.edges" ng-options="edge as edge.id for edge in edges track by edge.id">
+                             </select>
+                         </div>
+                        <div class="form-group">
+                            <label>map</label>
+                            <select class="form-control" ng-model="polygon.map.id" ng-options="map.id as map.id for map in maps">
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+                            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                        </button>
+                        <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-save"></span> Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Ocean</th>
+                    <th>Water</th>
+                    <th>Coast</th>
+                    <th>Elevation</th>
+                    <th>map</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="polygon in polygons">
+                    <td>{{polygon.id}}</td>
+                    <td>{{polygon.x}}</td>
+                    <td>{{polygon.y}}</td>
+                    <td>{{polygon.ocean}}</td>
+                    <td>{{polygon.water}}</td>
+                    <td>{{polygon.coast}}</td>
+                    <td>{{polygon.elevation}}</td>
+                    <td>{{polygon.map.id}}</td>
+                    <td>
+                        <button type="submit"
+                                ng-click="update(polygon.id)"
+                                class="btn btn-default">
+                            <span class="glyphicon glyphicon-pencil"></span> Edit
+                        </button>
+                        <button type="submit"
+                                ng-click="delete(polygon.id)"
+                                class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span> Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
