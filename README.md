@@ -76,7 +76,7 @@ Corner
   Double         - y           - y bounded by map
   Set<Long>      - touches     - Set of polygonsIDs touching the corner.
   Set<Long>      - protrudes   - Set of edgesIDs touching the corner
-  Set<Long>      - adjacent    - Set of cornersIDs connected to this one
+  Set<Long>      - adjacen t   - Set of cornersIDs connected to this one
   Boolean        - ocean       - Corner is surrounded by ocean polygons.
   Boolean        - coast       - If corner touches ocean and land polygons.
   Boolean        - water       - If corner surrounding area is water.
