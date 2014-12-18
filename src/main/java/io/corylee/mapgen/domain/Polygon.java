@@ -2,12 +2,16 @@ package io.corylee.mapgen.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -46,6 +50,21 @@ public class Polygon implements Serializable {
     @Column(name = "elevation")
     private Integer elevation;
 
+    @ElementCollection
+    @CollectionTable(name="T_POLYGON_NEIGHBOR", joinColumns=@JoinColumn(name="polygon_id"))
+    @Column(name="target_polygon_id")
+    public Set<Long> neighbors;
+    
+    @ElementCollection
+    @CollectionTable(name="T_POLYGON_CORNER", joinColumns=@JoinColumn(name="polygon_id"))
+    @Column(name="corner_id")
+    public Set<Long> corners;
+    
+    @ElementCollection
+    @CollectionTable(name="T_POLYGON_BORDER", joinColumns=@JoinColumn(name="polygon_id"))
+    @Column(name="edge_id")
+    public Set<Long> borders;
+    
     @ManyToOne
     private Map map;
 
@@ -128,8 +147,36 @@ public class Polygon implements Serializable {
 
         return true;
     }
+    
+    public Set<Long> getNeighbors() {
+		return neighbors;
+	}
 
-    @Override
+	public void setNeighbors(Set<Long> neighbors) {
+		this.neighbors = neighbors;
+	}
+
+	public Set<Long> getCorners() {
+		return corners;
+	}
+
+	public void setCorners(Set<Long> corners) {
+		this.corners = corners;
+	}
+
+	public Set<Long> getBorders() {
+		return borders;
+	}
+
+	public void setBorders(Set<Long> borders) {
+		this.borders = borders;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
@@ -144,6 +191,9 @@ public class Polygon implements Serializable {
                 ", water='" + water + "'" +
                 ", coast='" + coast + "'" +
                 ", elevation='" + elevation + "'" +
+                ", neighbors='" + neighbors + "'" +
+                ", corners='" + corners + "'" +
+                ", borders='" + borders + "'" +
                 '}';
     }
 }

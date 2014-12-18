@@ -7,27 +7,152 @@
     <property name="now" value="now()" dbms="mysql,h2"/>
     <property name="now" value="current_timestamp" dbms="postgresql"/>
 
-    <!--
-        Added the entity Map.
-    -->
-    <changeSet id="20141215223542" author="jhipster">
-        <createTable tableName="T_MAP">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="mapversion_id" type="bigint"/>
-            <column name="user_login" type="varchar"/>
+    <changeSet id="mapgen4" author="clee">
+        <createTable tableName="T_POLYGON_NEIGHBOR">
+        	<column name="polygon_id" type="bigint"/>
+        	<column name="target_polygon_id" type="bigint"/>
         </createTable>
         
-        <addForeignKeyConstraint baseColumnNames="mapversion_id"
-                                 baseTableName="T_MAP"
-                                 constraintName="fk_map_mapversion_id"
+        <createTable tableName="T_POLYGON_CORNER">
+        	<column name="polygon_id" type="bigint"/>
+        	<column name="corner_id" type="bigint"/>
+        </createTable>
+        
+        <createTable tableName="T_POLYGON_BORDER">
+        	<column name="polygon_id" type="bigint"/>
+        	<column name="edge_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="polygon_id"
+                                 baseTableName="T_POLYGON_NEIGHBOR"
+                                 constraintName="fk_polypoly_poly"
                                  referencedColumnNames="id"
-                                 referencedTableName="T_MAPVERSION"/>
-        <addForeignKeyConstraint baseColumnNames="user_login"
-                                 baseTableName="T_MAP"
-                                 constraintName="fk_map_user_id"
-                                 referencedColumnNames="login"
-                                 referencedTableName="T_USER"/>
+                                 referencedTableName="T_POLYGON"/>
+        
+        <addForeignKeyConstraint baseColumnNames="target_polygon_id"
+                                 baseTableName="T_POLYGON_NEIGHBOR"
+                                 constraintName="fk_polypoly_polyt"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_POLYGON"/>
+        
+        
+        <addForeignKeyConstraint baseColumnNames="polygon_id"
+                                 baseTableName="T_POLYGON_CORNER"
+                                 constraintName="fk_polycorner_poly"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+        
+        <addForeignKeyConstraint baseColumnNames="corner_id"
+                                 baseTableName="T_POLYGON_CORNER"
+                                 constraintName="fk_polycorner_corner"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+        
+        <addForeignKeyConstraint baseColumnNames="polygon_id"
+                                 baseTableName="T_POLYGON_BORDER"
+                                 constraintName="fk_polyedge_poly"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_EDGE"/>
+        
+        <addForeignKeyConstraint baseColumnNames="edge_id"
+                                 baseTableName="T_POLYGON_BORDER"
+                                 constraintName="fk_polyedge_edge"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_EDGE"/>
+        
     </changeSet>
+    
+    
+    
+    
+    <changeSet id="mapgen5" author="clee">
+     	<createTable tableName="T_EDGE_POLY">
+        	<column name="edge_id" type="bigint"/>
+        	<column name="polygon_id" type="bigint"/>
+        </createTable>
+        
+        <createTable tableName="T_EDGE_CORNER">
+        	<column name="edge_id" type="bigint"/>
+        	<column name="corner_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="edge_id"
+                                 baseTableName="T_EDGE_POLY"
+                                 constraintName="fk_edgepoly_edge"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_EDGE"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="polygon_id"
+                                 baseTableName="T_EDGE_POLY"
+                                 constraintName="fk_edgepoly_poly"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_POLYGON"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="edge_id"
+                                 baseTableName="T_EDGE_CORNER"
+                                 constraintName="fk_edgecorner_edge"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_EDGE"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="corner_id"
+                                 baseTableName="T_EDGE_CORNER"
+                                 constraintName="fk_edgecorner_corner"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+     </changeSet>
+     
+     <changeSet id="mapgen6" author="clee">
+     	<createTable tableName="T_CORNER_POLY">
+        	<column name="corner_id" type="bigint"/>
+        	<column name="polygon_id" type="bigint"/>
+        </createTable>
+                
+        <addForeignKeyConstraint baseColumnNames="corner_id"
+                                 baseTableName="T_CORNER_POLY"
+                                 constraintName="fk_cornerpoly_corner"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="polygon_id"
+                                 baseTableName="T_CORNER_POLY"
+                                 constraintName="fk_cornerpoly_poly"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_POLYGON"/>
+        
+        
+        
+        <createTable tableName="T_CORNER_EDGE">
+        	<column name="corner_id" type="bigint"/>
+        	<column name="edge_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="corner_id"
+                                 baseTableName="T_CORNER_EDGE"
+                                 constraintName="fk_corneredge_corner"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="edge_id"
+                                 baseTableName="T_CORNER_EDGE"
+                                 constraintName="fk_corneredge_edge"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_EDGE"/>
+        
+        <createTable tableName="T_CORNER_CORNER">
+        	<column name="corner_id" type="bigint"/>
+        	<column name="target_corner_id" type="bigint"/>
+        </createTable>
+        
+        <addForeignKeyConstraint baseColumnNames="corner_id"
+                                 baseTableName="T_CORNER_CORNER"
+                                 constraintName="fk_cornercorner_corner"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+                                 
+        <addForeignKeyConstraint baseColumnNames="target_corner_id"
+                                 baseTableName="T_CORNER_CORNER"
+                                 constraintName="fk_cornercorner_cornert"
+                                 referencedColumnNames="id"
+                                 referencedTableName="T_CORNER"/>
+     </changeSet>
 </databaseChangeLog>

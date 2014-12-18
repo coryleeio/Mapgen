@@ -21,7 +21,7 @@ public class MapDTO {
 		if(version != null)
 		{
 			maxX = version.getMaxX().toString();
-			maxY = version.getMaxX().toString();
+			maxY = version.getMaxY().toString();
 		}
 		this.polygonList = StringUtil.convertObjectListToString(polygonList);
 		this.edgeList = StringUtil.convertObjectListToString(edgeList);

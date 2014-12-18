@@ -2,12 +2,16 @@ package io.corylee.mapgen.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -45,6 +49,21 @@ public class Corner implements Serializable {
 
     @Column(name = "moisture")
     private Integer moisture;
+    
+    @ElementCollection
+    @CollectionTable(name="T_CORNER_POLY", joinColumns=@JoinColumn(name="corner_id"))
+    @Column(name="polygon_id")
+    public Set<Long> touches;
+    
+    @ElementCollection
+    @CollectionTable(name="T_CORNER_EDGE", joinColumns=@JoinColumn(name="corner_id"))
+    @Column(name="edge_id")
+    public Set<Long> protrudes;
+    
+    @ElementCollection
+    @CollectionTable(name="T_CORNER_CORNER", joinColumns=@JoinColumn(name="corner_id"))
+    @Column(name="target_corner_id")
+    public Set<Long> adjacent;
     
     @ManyToOne
     private Map map;
@@ -117,6 +136,30 @@ public class Corner implements Serializable {
 		return map;
 	}
 
+	public Set<Long> getTouches() {
+		return touches;
+	}
+
+	public void setTouches(Set<Long> touches) {
+		this.touches = touches;
+	}
+
+	public Set<Long> getProtrudes() {
+		return protrudes;
+	}
+
+	public void setProtrudes(Set<Long> protrudes) {
+		this.protrudes = protrudes;
+	}
+
+	public Set<Long> getAdjacent() {
+		return adjacent;
+	}
+
+	public void setAdjacent(Set<Long> adjacent) {
+		this.adjacent = adjacent;
+	}
+
 	public void setMap(Map map) {
 		this.map = map;
 	}
@@ -153,6 +196,9 @@ public class Corner implements Serializable {
                 ", coast='" + coast + "'" +
                 ", elevation='" + elevation + "'" +
                 ", moisture='" + moisture + "'" +
+				", touches='" + touches + "'" +
+				", protrudes='" + protrudes + "'" +
+				", adjacent='" + adjacent + "'" +
                 '}';
     }
 }

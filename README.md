@@ -54,9 +54,9 @@ Map
 Polygon
   Double         - x           - x bounded by map
   Double         - y           - y bounded by map
-  Set<Polygon>   - neighbors   - Set of adjacent Polygons
-  Set<Corner>    - corners     - Set of adjacent Corners
-  Set<Edge>      - borders     - Set of adjacent Edges
+  Set<Long>      - neighbors   - Set of adjacent PolygonIDs
+  Set<Long>      - corners     - Set of adjacent CornersIDs
+  Set<Long>      - borders     - Set of adjacent EdgesIDs
   Boolean        - ocean       - Is ocean.
   Boolean        - water       - Is water.
   Boolean        - coast       - Is land with ocean boarder.
@@ -64,19 +64,19 @@ Polygon
   Map            - map
 
 Edge
-  Polygon        - d0          - Polygon connected by the edge
-  Polygon        - d1          - Polygon connected by the edge
-  Corner         - v0          - Corner connected by the edge
-  Corner         - v0          - Corner connected by the edge
+  Long           - d0          - PolygonID connected by the edge
+  Long           - d1          - PolygonID connected by the edge
+  Long           - v0          - CornerID connected by the edge
+  Long           - v1          - CornerID connected by the edge
   Boolean        - river       - Is a river
   Map            - map
 
 Corner
   Double         - x           - x bounded by map
   Double         - y           - y bounded by map
-  Set<Polygon>   - touches     - Set of polygons touching the corner.
-  Set<Polygon>   - protrudes   - Set of edges touching the corner
-  Set<Polygon>   - adjacent    - Set of corners connected to this one
+  Set<Long>      - touches     - Set of polygonsIDs touching the corner.
+  Set<Long>      - protrudes   - Set of edgesIDs touching the corner
+  Set<Long>      - adjacent    - Set of cornersIDs connected to this one
   Boolean        - ocean       - Corner is surrounded by ocean polygons.
   Boolean        - coast       - If corner touches ocean and land polygons.
   Boolean        - water       - If corner surrounding area is water.
@@ -88,6 +88,7 @@ Corner
 
  Moisture 6(wet) - 1(dry)
  Elevation 4(High) - 1 (low)
+
 
 
 
